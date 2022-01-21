@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-@Controller
+@RestController
 @RequestMapping("/admin")
 public class AdminController {
 
@@ -33,11 +35,10 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String allUsers(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("user", user);
-        model.addAttribute("users", userService.allUsers());
-        model.addAttribute("roles", roleService.getAllRoles());
-        return "users";
+    public List<User> allUsers(@AuthenticationPrincipal User user) {
+        List<User> userList = new ArrayList<>();
+        userList.add(new User("вася","васильев",43 ));
+        return userList;
     }
 
     @PostMapping
@@ -77,4 +78,5 @@ public class AdminController {
         return "redirect:/admin";
     }
 }
+
 
